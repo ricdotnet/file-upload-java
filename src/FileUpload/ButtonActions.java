@@ -44,14 +44,16 @@ public class ButtonActions implements ActionListener {
   public void actionPerformed(ActionEvent e) {
 
     if(e.getSource().getClass().getName().equals("FileUpload.FileChooser")) {
+      Object c = components.get("FILE_CHOOSER");
+      modal = (Modal) c;
+
       if(e.getActionCommand().equals("CancelSelection")) {
-        Object c = components.get("FILE_CHOOSER");
-        modal = (Modal) c;
         modal.setVisible(false);
       }
 
       if(e.getActionCommand().equals("ApproveSelection")) {
         modal.runMethod("FILE_CHOOSER", "setThisSelectedFiles");
+        modal.setModalVisibility(false);
       }
     }
 

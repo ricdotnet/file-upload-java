@@ -10,6 +10,7 @@ public class FileChooser extends JFileChooser {
 
   // private File[] selectedFiles = null;
   private static File selectedFile = null;
+  UploadFile uploadFile = new UploadFile();
 
   public FileChooser setFileChooserSize(int width, int height) {
     setSize(width, height);
@@ -37,8 +38,12 @@ public class FileChooser extends JFileChooser {
 
   public FileChooser setThisSelectedFiles() {
     selectedFile = getSelectedFile();
-    saveFile(selectedFile);
+//    saveFile(selectedFile);
+    uploadFile.connectSocket();
+    uploadFile.uploadFile(selectedFile);
     selectedFile = null;
+
+    setSelectedFile(new File("")); // reset the file of the modal...
 
     return this;
   }

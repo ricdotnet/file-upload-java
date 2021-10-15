@@ -8,7 +8,11 @@ public class MainClass extends JFrame {
   FileChooser fileChooser = new FileChooser();
   Modal fileModal = new Modal();
 
+  UploadFile uploadFile = new UploadFile();
+
   private void init() {
+//    uploadFile.connectSocket();
+
     setLayout(null);
     setSize(500, 500);
     setLocationRelativeTo(null);
@@ -40,7 +44,7 @@ public class MainClass extends JFrame {
   }
 
   private Modal createFileModal() {
-    fileModal.setModalSize(400, 200)
+    fileModal.setModalSize(400, 300)
       .setModalCenter()
       .setModalId("FILE_CHOOSER")
       .addComponent(addFileChooser());

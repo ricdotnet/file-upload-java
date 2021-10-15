@@ -41,22 +41,19 @@ public class Modal extends JDialog {
     return this;
   }
 
-  public Modal runMethod(String component, String method) {
+  public void runMethod(String component, String method) {
     JComponent c = modals.get(component);
-    
-    if(c.isValid()) {
-      for (Method m : c.getClass().getMethods()) {
-        if(m.getName().equals(method)) {
-          try {
-            m.invoke(c, new Object[0]);
-          } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-          }
+
+    for (Method m : c.getClass().getMethods()) {
+      if(m.getName().equals(method)) {
+        try {
+          m.invoke(c);
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
         }
       }
     }
 
-    return this;
   }
 }
