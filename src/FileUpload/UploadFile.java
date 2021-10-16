@@ -15,25 +15,24 @@ public class UploadFile {
 
   public void connectSocket() {
     try {
-      connectionSocket = new Socket("localhost", 9090);
+      connectionSocket = new Socket("admin.rrocha.uk", 9090);
       dataIn = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
       dataOut = new DataOutputStream(connectionSocket.getOutputStream());
-
-//      dataOut.writeUTF("Hello from client!" + "\n");
 
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
-  public void uploadFile(File file) {
+  public void uploadFile(File f) {
     try {
-//      dataOut.writeUTF(file.getName());
-//      dataOut.flush();
+      dataOut.writeUTF(f.getName() + "\n");
+      System.out.println(Files.probeContentType(Path.of(f.getAbsolutePath())));
 
-      byte[] fileBytes = Files.readAllBytes(Path.of(file.getAbsolutePath()));
+      byte[] fileBytes = Files.readAllBytes(Path.of(f.getAbsolutePath()));
       dataOut.write(fileBytes);
       dataOut.flush();
+      dataOut.close();
 
       System.out.println("uploaded....");
     } catch (IOException e) {

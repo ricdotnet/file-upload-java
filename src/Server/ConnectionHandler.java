@@ -11,8 +11,10 @@ public class ConnectionHandler extends Thread {
   private BufferedReader dataIn = null;
   private DataOutputStream dataOut = null;
 
-  public ConnectionHandler(Socket socket) {
+  private String destination;
+  public ConnectionHandler(Socket socket, String destination) {
     connectionSocket = socket;
+    this.destination = destination;
     try {
       dataIn = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
       fileIn = new BufferedInputStream(connectionSocket.getInputStream());
@@ -28,11 +30,13 @@ public class ConnectionHandler extends Thread {
   public void run() {
     while(true) {
       try {
-        // String fileName = dataIn.readLine() + "\n";
+        String fileName = String.valueOf(dataIn.readLine());
+        StringBuilder path = new StringBuilder();
+        path.append(destination).append(fileName);
         // dataIn.close();
 
         byte[] fileBytes = fileIn.readAllBytes();
-        Files.write(Path.of("/Users/ricardorocha/Documents/" + "some.png"), fileBytes);
+        Files.write(Path.of(String.valueOf(path).replace("\0", "")), fileBytes);
         System.out.println("File Saved....");
         fileIn.close();
 
